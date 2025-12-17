@@ -11,8 +11,8 @@ public class CinephileGenerator implements Runnable {
     private final String IDENTIFIER;
     private final InfiniteQueue INFINITEQUEUE;
 
-    public CinephileGenerator(String IDENTIFIER, InfiniteQueue INFINITEQUEUE) {
-        this.IDENTIFIER = String.format("%s-cinephileGenerator", IDENTIFIER);
+    public CinephileGenerator(String name, InfiniteQueue INFINITEQUEUE) {
+        this.IDENTIFIER = String.format("%s-cinephileGenerator", name);
         this.INFINITEQUEUE = INFINITEQUEUE;
     }
 
