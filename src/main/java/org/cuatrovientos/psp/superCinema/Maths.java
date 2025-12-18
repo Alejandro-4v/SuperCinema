@@ -4,8 +4,10 @@ import java.util.Random;
 
 public class Maths {
 
-    protected final int SCALE_FOR_MILLISECONDS_FROM_SECONDS = 1000;
-    protected final int SCALE_FOR_MILLISECONDS_FROM_MINUTES = 60000;
+    protected static final int SCALE_FOR_MILLISECONDS_FROM_SECONDS = 5; // DEBUG
+    protected static final int SCALE_FOR_MILLISECONDS_FROM_MINUTES = 600; // DEBUG
+//    protected static final int SCALE_FOR_MILLISECONDS_FROM_SECONDS = 1000;
+//    protected static final int SCALE_FOR_MILLISECONDS_FROM_MINUTES = 60000;
 
     private static final Random RANDOM = new Random();
 
