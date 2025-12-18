@@ -1,22 +1,50 @@
 package org.cuatrovientos.psp.superCinema;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Cinema {
 
-    private final int MAX_CAPACITY_FOR_CINEPHILES = 200;
+    private static final int MAX_CAPACITY_FOR_CINEPHILES = 200;
 
-    private AtomicInteger cinephilesInCinema = new AtomicInteger(0);
+    private static final InfiniteQueue INFINITEQUEUE1 = new InfiniteQueue("infiniteQueue-1");
 
-    private final InfiniteQueue INFINITEQUEUE1 = new InfiniteQueue("infiniteQueue-1");
-    private final InfiniteQueue INFINITEQUEUE2 = new InfiniteQueue("infiniteQueue-2");
+    private static final CinephileGenerator CINEPHILEGENERATOR1 = new CinephileGenerator("mainCinephileGenerator", INFINITEQUEUE1);
 
-    private final BoxOffice BOXOFFICE1 = new BoxOffice("boxOffice-1", INFINITEQUEUE1, INFINITEQUEUE2);
+    private static final BoxOffice BOXOFFICE1 = new BoxOffice("boxOffice-1", INFINITEQUEUE1);
+    private static final BoxOffice BOXOFFICE2 = new BoxOffice("boxOffice-2", INFINITEQUEUE1);
 
-    private final String IDENTIFIER;
+    public static void main(String[] args) throws InterruptedException {
+        Thread cinephileGenerator1Thread = new Thread(CINEPHILEGENERATOR1);
+        Thread boxOffice1Thread = new Thread(BOXOFFICE1);
+        Thread boxOffice2Thread = new Thread(BOXOFFICE2);
 
-    public Cinema(String name) {
-        this.IDENTIFIER = name;
+        cinephileGenerator1Thread.start();
+        boxOffice1Thread.start();
+        boxOffice2Thread.start();
+
+        while (!shouldTheCinemaClose()) {
+            Thread.sleep(100);
+        }
+
+        boxOffice1Thread.interrupt();
+        boxOffice2Thread.interrupt();
+        cinephileGenerator1Thread.interrupt();
+
+        System.out.printf("Cinema open! The movie is starting! Total sold tickets: %s\n", getSoldTicketsAmongAllBoxOffices());
+    }
+
+    public static int getSoldTicketsAmongAllBoxOffices() {
+        return BOXOFFICE1.getSoldTickets() + BOXOFFICE2.getSoldTickets();
+    }
+
+    public static boolean isAnyBoxOfficeStillOpen() {
+        return BOXOFFICE1.isBoxOfficeStillOpen() || BOXOFFICE2.isBoxOfficeStillOpen();
+    }
+
+    public static boolean allAreTicketsSold() {
+        return getSoldTicketsAmongAllBoxOffices() >= MAX_CAPACITY_FOR_CINEPHILES;
+    }
+
+    public static boolean shouldTheCinemaClose() {
+        return !isAnyBoxOfficeStillOpen() || allAreTicketsSold();
     }
 
 }
