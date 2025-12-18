@@ -8,4 +8,7 @@ public class Cinephile {
         this.IDENTIFIER = name;
     }
 
+    public String getIDENTIFIER() {
+        return IDENTIFIER;
+    }
 }
