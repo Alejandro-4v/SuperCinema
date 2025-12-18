@@ -17,7 +17,7 @@ public class InfiniteQueue {
     }
 
     public void addCinephilesToQueue(ArrayList<Cinephile> cinephilesToCheckIn) {
-        System.out.printf("%s - %s cinephiles added to queue", this.IDENTIFIER, cinephilesToCheckIn.size());
+        System.out.printf("%s - %s cinephiles added to queue \n", this.IDENTIFIER, cinephilesToCheckIn.size());
         cinephilesWaitingInLine.addAll(cinephilesToCheckIn);
     }
 
