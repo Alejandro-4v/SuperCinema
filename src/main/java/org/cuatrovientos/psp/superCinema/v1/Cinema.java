@@ -1,4 +1,4 @@
-package org.cuatrovientos.psp.superCinema;
+package org.cuatrovientos.psp.superCinema.v1;
 
 public class Cinema {
 
