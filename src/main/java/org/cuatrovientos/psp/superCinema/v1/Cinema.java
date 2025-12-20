@@ -7,6 +7,7 @@ public class Cinema {
     private static final InfiniteQueue INFINITEQUEUE1 = new InfiniteQueue("infiniteQueue-1");
 
     private static final CinephileGenerator CINEPHILEGENERATOR1 = new CinephileGenerator("mainCinephileGenerator", INFINITEQUEUE1);
+    private static final int TIME_IN_MILLISECONDS_TO_WAIT_BEFORE_CHECKING_CINEMA_STATUS = 10;
 
     private static final BoxOffice BOXOFFICE1 = new BoxOffice("boxOffice-1", INFINITEQUEUE1);
     private static final BoxOffice BOXOFFICE2 = new BoxOffice("boxOffice-2", INFINITEQUEUE1);
@@ -21,7 +22,7 @@ public class Cinema {
         boxOffice2Thread.start();
 
         while (!shouldTheCinemaClose()) {
-            Thread.sleep(100);
+            Thread.sleep(TIME_IN_MILLISECONDS_TO_WAIT_BEFORE_CHECKING_CINEMA_STATUS);
         }
 
         boxOffice1Thread.interrupt();
