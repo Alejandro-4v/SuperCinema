@@ -37,6 +37,7 @@ public class BoxOffice implements Runnable {
                 }
             } catch (InterruptedException e) {
                 closeBoxOffice();
+                break;
             }
         }
 

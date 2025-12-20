@@ -38,11 +38,12 @@ public class CinephileGenerator implements Runnable {
                 INFINITEQUEUE.addCinephilesToQueue(cinephilesToAddToQueue);
             } catch (InterruptedException e) {
                 closeCinephileGenerator();
+                break;
             }
         }
     }
 
     private void closeCinephileGenerator() {
-        System.out.printf("%s - Queue closed", this.IDENTIFIER);
+        System.out.printf("%s - Queue closed\n", this.IDENTIFIER);
     }
 }
