@@ -1,7 +1,5 @@
 package org.cuatrovientos.psp.superCinema.v1;
 
-import org.cuatrovientos.psp.superCinema.Maths;
-
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
