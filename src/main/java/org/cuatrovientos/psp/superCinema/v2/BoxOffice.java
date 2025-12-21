@@ -47,12 +47,12 @@ public class BoxOffice implements Runnable {
         INFINITEQUEUE.closeQueue();
     }
 
-    private long getTimeFromOpeningInMiliseconds() {
+    private long getTimeFromOpeningInMilliseconds() {
         return System.currentTimeMillis() - openedAtTimestamp;
     }
 
     private boolean checkIfTheFilmHasStarted() {
-        return getTimeFromOpeningInMiliseconds() > Finals.TIME_IN_MINUTES_FOR_OPENING_EARLIER * Maths.SCALE_FOR_MILLISECONDS_FROM_MINUTES;
+        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MINUTES_FOR_OPENING_EARLIER * Maths.SCALE_FOR_MILLISECONDS_FROM_MINUTES;
     }
 
     public boolean isBoxOfficeStillOpen() {
