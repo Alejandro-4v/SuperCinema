@@ -52,7 +52,7 @@ public class BoxOffice implements Runnable {
     }
 
     private boolean checkIfTheFilmHasStarted() {
-        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MINUTES_FOR_OPENING_EARLIER * Maths.SCALE_FOR_MILLISECONDS_FROM_MINUTES;
+        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MILLISECONDS_FOR_OPENING_EARLIER;
     }
 
     public boolean isBoxOfficeStillOpen() {
