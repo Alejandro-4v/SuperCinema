@@ -5,12 +5,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CinephileGenerator implements Runnable {
 
-    private final int MIN_CINEPHILES_PER_MINUTE_RATIO = 10;
-    private final int MAX_CINEPHILES_PER_MINUTE_RATIO = 15;
-    private final int TIME_IN_SECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILES = 60;
-
-    private final int TIME_IN_MILLISECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILES = TIME_IN_SECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILES * Maths.SCALE_FOR_MILLISECONDS_FROM_SECONDS;
-
     private final String IDENTIFIER;
     private final InfiniteQueue INFINITEQUEUE;
 
@@ -27,10 +21,10 @@ public class CinephileGenerator implements Runnable {
         System.out.printf("%s - Started generating cinephiles\n", this.IDENTIFIER);
 
         while (INFINITEQUEUE.isStillWaitingForCinephiles()) {
-            int cinephilesPerMinute = Maths.randomIntBetweenRangeInclusive(MIN_CINEPHILES_PER_MINUTE_RATIO, MAX_CINEPHILES_PER_MINUTE_RATIO);
+            int cinephilesPerMinute = Maths.randomIntBetweenRangeInclusive(Finals.MIN_CINEPHILES_PER_MINUTE_RATIO, Finals.MAX_CINEPHILES_PER_MINUTE_RATIO);
 
             try {
-                Thread.sleep(TIME_IN_MILLISECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILES);
+                Thread.sleep(Finals.TIME_IN_MILLISECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILES);
                 ArrayList<Cinephile> cinephilesToAddToQueue = new ArrayList<>();
                 for (int i = 0; i < cinephilesPerMinute; i++) {
                     cinephilesToAddToQueue.add(new Cinephile(String.format("%s-cinephile-%s", IDENTIFIER, currentCinephileId.getAndIncrement())));

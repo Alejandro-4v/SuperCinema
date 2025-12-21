@@ -4,15 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BoxOffice implements Runnable {
 
-    private final int MIN_TIME_IN_SECONDS_FOR_SELLING_TICKET = 20;
-    private final int MAX_TIME_IN_SECONDS_FOR_SELLING_TICKET = 30;
-
-    private final int TIME_IN_MINUTES_FOR_OPENING_EARLIER = 30;
-
     private final String IDENTIFIER;
     private final InfiniteQueue INFINITEQUEUE;
 
-    private long openedAtTimestap;
+    private final long openedAtTimestamp;
 
     private final AtomicInteger soldTickets = new AtomicInteger(0);
 
@@ -20,7 +15,7 @@ public class BoxOffice implements Runnable {
         this.IDENTIFIER = name;
         this.INFINITEQUEUE = INFINITEQUEUE;
 
-        this.openedAtTimestap = System.currentTimeMillis();
+        this.openedAtTimestamp = System.currentTimeMillis();
     }
 
     @Override
@@ -31,7 +26,7 @@ public class BoxOffice implements Runnable {
                 Cinephile waitingCinephile = INFINITEQUEUE.getWaitingCinephile();
                 if (waitingCinephile != null) {
                     System.out.printf("%s - Started selling tickets to %s\n", this.IDENTIFIER, waitingCinephile.getIDENTIFIER());
-                    Thread.sleep((long) Maths.randomIntBetweenRangeInclusive(MIN_TIME_IN_SECONDS_FOR_SELLING_TICKET, MAX_TIME_IN_SECONDS_FOR_SELLING_TICKET) * Maths.SCALE_FOR_MILLISECONDS_FROM_SECONDS);
+                    Thread.sleep((long) Maths.randomIntBetweenRangeInclusive(Finals.MIN_TIME_IN_SECONDS_FOR_SELLING_TICKET, Finals.MAX_TIME_IN_SECONDS_FOR_SELLING_TICKET) * Maths.SCALE_FOR_MILLISECONDS_FROM_SECONDS);
                     System.out.printf("%s - Finished selling tickets to %s\n", this.IDENTIFIER, waitingCinephile.getIDENTIFIER());
                     soldTickets.incrementAndGet();
                 }
@@ -52,12 +47,12 @@ public class BoxOffice implements Runnable {
         INFINITEQUEUE.closeQueue();
     }
 
-    private long getTimeFromOpeningInMiliseconds() {
-        return System.currentTimeMillis() - openedAtTimestap;
+    private long getTimeFromOpeningInMilliseconds() {
+        return System.currentTimeMillis() - openedAtTimestamp;
     }
 
     private boolean checkIfTheFilmHasStarted() {
-        return getTimeFromOpeningInMiliseconds() > TIME_IN_MINUTES_FOR_OPENING_EARLIER * Maths.SCALE_FOR_MILLISECONDS_FROM_MINUTES;
+        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MILLISECONDS_FOR_OPENING_EARLIER;
     }
 
     public boolean isBoxOfficeStillOpen() {
