@@ -24,23 +24,13 @@ public class BoxOffice implements Runnable {
         while (isBoxOfficeStillOpen()) {
             try {
                 Cinephile nextCinephile = getNextCinephile();
-                if (nextCinephile != null) {
-                    System.out.printf("%s - Started selling tickets to %s\n", this.IDENTIFIER, nextCinephile.getIDENTIFIER());
-                    Thread.sleep((long) Maths.randomIntBetweenRangeInclusive(Finals.MIN_TIME_IN_SECONDS_FOR_SELLING_TICKET, Finals.MAX_TIME_IN_SECONDS_FOR_SELLING_TICKET) * Maths.SCALE_FOR_MILLISECONDS_FROM_SECONDS);
-                    System.out.printf("%s - Finished selling tickets to %s\n", this.IDENTIFIER, nextCinephile.getIDENTIFIER());
-                    soldTickets.incrementAndGet();
-                }
+                tryToSellTicketToCinephile(nextCinephile);
             } catch (InterruptedException e) {
                 closeBoxOffice();
                 break;
             }
         }
 
-    }
-
-    private void closeBoxOffice() {
-        closeQueues();
-        System.out.printf("Box Office (%s) closed. Total sold tickets in this box office: %s\n", this.IDENTIFIER, soldTickets.get());
     }
 
     public boolean isBoxOfficeStillOpen() {
@@ -51,10 +41,28 @@ public class BoxOffice implements Runnable {
         return soldTickets.get();
     }
 
+    private boolean checkIfTheFilmHasStarted() {
+        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MILLISECONDS_FOR_OPENING_EARLIER;
+    }
+
+    private void tryToSellTicketToCinephile(Cinephile nextCinephile) throws InterruptedException {
+        if (nextCinephile != null) {
+            System.out.printf("%s - Started selling tickets to %s\n", this.IDENTIFIER, nextCinephile.getIDENTIFIER());
+            Thread.sleep((long) Maths.randomIntBetweenRangeInclusive(Finals.MIN_TIME_IN_SECONDS_FOR_SELLING_TICKET, Finals.MAX_TIME_IN_SECONDS_FOR_SELLING_TICKET) * Maths.SCALE_FOR_MILLISECONDS_FROM_SECONDS);
+            System.out.printf("%s - Finished selling tickets to %s\n", this.IDENTIFIER, nextCinephile.getIDENTIFIER());
+            soldTickets.incrementAndGet();
+        }
+    }
+
     private void closeQueues() {
         for (FiniteQueue finiteQueue : FINITEQUEUES) {
             finiteQueue.closeQueue();
         }
+    }
+
+    private void closeBoxOffice() {
+        closeQueues();
+        System.out.printf("Box Office (%s) closed. Total sold tickets in this box office: %s\n", this.IDENTIFIER, soldTickets.get());
     }
 
     private Cinephile getNextCinephile() throws InterruptedException {
@@ -79,10 +87,6 @@ public class BoxOffice implements Runnable {
 
     private long getTimeFromOpeningInMilliseconds() {
         return System.currentTimeMillis() - openedAtTimestamp;
-    }
-
-    private boolean checkIfTheFilmHasStarted() {
-        return getTimeFromOpeningInMilliseconds() > Finals.TIME_IN_MILLISECONDS_FOR_OPENING_EARLIER;
     }
 
 }
