@@ -11,6 +11,8 @@ public class Cinema {
 
     public static void main(String[] args) throws InterruptedException {
 
+        Finals.checkFinals();
+
         for (int queueIndex = 0; queueIndex < FINITE_QUEUES.length; queueIndex++) {
             FiniteQueue newQueue = new FiniteQueue(String.format("queue-%s", queueIndex));
             FINITE_QUEUES[queueIndex] = newQueue;
