@@ -11,14 +11,6 @@ public class Cinema {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //TODO: En este nuevo planteamiento ahora cada BoxOffice tendrá X filas, todas estas filas estarán dentro de un mismo array o colección
-        // de forma que siempre estén localizables para poder ver cual es la que menos gente tiene e insertar un nuevo cinéfilo.
-        // El Cinema tendrá un solo generador y este generador dará servicio a todas las colas.
-
-        // Entonces se seguirá el mismo planteamiento añadiendo a las Queue la posibilidad de devolver la cantidad de espacios libres.
-        // Esto será util para que el generador sepa dónde meter un nuevo cinéfilo. Y entonces dentro del propio generador habrá una colección de colas
-        // con las que computará a dónde meter el nuevo cinéfilo.
-
         for (int queueIndex = 0; queueIndex < FINITE_QUEUES.length; queueIndex++) {
             FiniteQueue newQueue = new FiniteQueue(String.format("queue-%s", queueIndex));
             FINITE_QUEUES[queueIndex] = newQueue;
@@ -33,14 +25,6 @@ public class Cinema {
             for (int queueIndex = 0; queueIndex < finiteQueuesForCurrentBoxOffice.length; queueIndex++) {
                 finiteQueuesForCurrentBoxOffice[queueIndex] = FINITE_QUEUES[currentBoxOfficeIndex * Finals.NUMBER_OF_QUEUES_PER_BOX_OFFICE + queueIndex];
             }
-
-//            System.arraycopy(
-//                    FINITE_QUEUES,
-//                    currentBoxOfficeIndex * Finals.NUMBER_OF_QUEUES_PER_BOX_OFFICE,
-//                    finiteQueuesForCurrentBoxOffice,
-//                    0,
-//                    Finals.NUMBER_OF_QUEUES_PER_BOX_OFFICE
-//            ); Esto también funcionaría, pero es menos legible y menos claro
 
             BoxOffice newBoxOffice = new BoxOffice(String.format("boxOffice-%s", currentBoxOfficeIndex), finiteQueuesForCurrentBoxOffice);
             BOX_OFFICES[currentBoxOfficeIndex] = newBoxOffice;
