@@ -20,7 +20,7 @@ public class CinephileGenerator implements Runnable {
 
         System.out.printf("%s - Started generating cinephiles\n", this.IDENTIFIER);
 
-        while (INFINITEQUEUE.isStillWaitingForCinephiles()) {
+        while (INFINITEQUEUE.isStillWaitingForCinephiles() && !Thread.currentThread().isInterrupted()) {
             int cinephilesPerMinute = Maths.randomIntBetweenRangeInclusive(Finals.MIN_CINEPHILES_PER_MINUTE_RATIO, Finals.MAX_CINEPHILES_PER_MINUTE_RATIO);
 
             try {

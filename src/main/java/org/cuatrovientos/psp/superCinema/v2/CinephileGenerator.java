@@ -19,7 +19,7 @@ public class CinephileGenerator implements Runnable {
 
         System.out.printf("%s - Started generating cinephiles\n", this.IDENTIFIER);
 
-        while (isAnyFiniteQueueWaitingForCinephiles()) {
+        while (isAnyFiniteQueueWaitingForCinephiles() && !Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(Finals.TIME_IN_MILLISECONDS_TO_SLEEP_UNTIL_NEW_CINEPHILE);
 

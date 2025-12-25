@@ -21,7 +21,7 @@ public class BoxOffice implements Runnable {
     @Override
     public void run() {
 
-        while (isBoxOfficeStillOpen()) {
+        while (isBoxOfficeStillOpen() && !Thread.currentThread().isInterrupted()) {
             try {
                 Cinephile nextCinephile = getNextCinephile();
                 tryToSellTicketToCinephile(nextCinephile);
